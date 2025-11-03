@@ -225,25 +225,6 @@ def display_extremes(worst_losses, closest_wins):
         else:
             print(f"Closest Win: N/A (no wins recorded)")
 
-def save_results(team_record_counts, num_simulations, output_file='results.json'):
-    """
-    Save detailed results to a JSON file.
-    """
-    results = {}
-    for team, records in team_record_counts.items():
-        results[team] = {
-            f"{wins}-{losses}": {
-                "count": count,
-                "probability": count / num_simulations
-            }
-            for (wins, losses), count in records.items()
-        }
-    
-    with open(output_file, 'w') as f:
-        json.dump(results, f, indent=2)
-    
-    print(f"\nDetailed results saved to {output_file}")
-
 if __name__ == "__main__":
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Fantasy Football Schedule Simulator')
@@ -274,6 +255,3 @@ if __name__ == "__main__":
     
     # Display worst losses and closest wins
     display_extremes(worst_losses, closest_wins)
-    
-    # Save results
-    save_results(team_record_counts, args.simulations, args.output)

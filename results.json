@@ -1,394 +1,394 @@
 {
   "Jack/Eitan": {
-    "3-5": {
-      "count": 2466820,
-      "probability": 0.246682
-    },
-    "5-3": {
-      "count": 2050358,
-      "probability": 0.2050358
-    },
-    "6-2": {
-      "count": 815281,
-      "probability": 0.0815281
-    },
     "4-4": {
-      "count": 2921788,
-      "probability": 0.2921788
-    },
-    "1-7": {
-      "count": 323025,
-      "probability": 0.0323025
-    },
-    "2-6": {
-      "count": 1219965,
-      "probability": 0.1219965
+      "count": 321220,
+      "probability": 0.32122
     },
     "7-1": {
-      "count": 158151,
-      "probability": 0.0158151
+      "count": 12189,
+      "probability": 0.012189
+    },
+    "3-5": {
+      "count": 248419,
+      "probability": 0.248419
+    },
+    "5-3": {
+      "count": 221105,
+      "probability": 0.221105
+    },
+    "6-2": {
+      "count": 77756,
+      "probability": 0.077756
+    },
+    "2-6": {
+      "count": 99076,
+      "probability": 0.099076
+    },
+    "1-7": {
+      "count": 18537,
+      "probability": 0.018537
     },
     "0-8": {
-      "count": 35293,
-      "probability": 0.0035293
+      "count": 1016,
+      "probability": 0.001016
     },
     "8-0": {
-      "count": 9319,
-      "probability": 0.0009319
+      "count": 682,
+      "probability": 0.000682
+    }
+  },
+  "Fisher": {
+    "3-5": {
+      "count": 165803,
+      "probability": 0.165803
+    },
+    "5-3": {
+      "count": 299837,
+      "probability": 0.299837
+    },
+    "4-4": {
+      "count": 323545,
+      "probability": 0.323545
+    },
+    "6-2": {
+      "count": 141779,
+      "probability": 0.141779
+    },
+    "8-0": {
+      "count": 2679,
+      "probability": 0.002679
+    },
+    "2-6": {
+      "count": 32418,
+      "probability": 0.032418
+    },
+    "7-1": {
+      "count": 32079,
+      "probability": 0.032079
+    },
+    "1-7": {
+      "count": 1860,
+      "probability": 0.00186
+    }
+  },
+  "Sam/Isaac": {
+    "4-4": {
+      "count": 282360,
+      "probability": 0.28236
+    },
+    "1-7": {
+      "count": 53771,
+      "probability": 0.053771
+    },
+    "3-5": {
+      "count": 338050,
+      "probability": 0.33805
+    },
+    "2-6": {
+      "count": 196409,
+      "probability": 0.196409
+    },
+    "5-3": {
+      "count": 105949,
+      "probability": 0.105949
+    },
+    "6-2": {
+      "count": 16936,
+      "probability": 0.016936
+    },
+    "0-8": {
+      "count": 5620,
+      "probability": 0.00562
+    },
+    "7-1": {
+      "count": 905,
+      "probability": 0.000905
     }
   },
   "Max/Dani": {
     "7-1": {
-      "count": 2442635,
-      "probability": 0.2442635
+      "count": 152980,
+      "probability": 0.15298
     },
     "6-2": {
-      "count": 3525198,
-      "probability": 0.3525198
+      "count": 336702,
+      "probability": 0.336702
     },
     "5-3": {
-      "count": 2422383,
-      "probability": 0.2422383
+      "count": 328532,
+      "probability": 0.328532
     },
     "4-4": {
-      "count": 843432,
-      "probability": 0.0843432
-    },
-    "2-6": {
-      "count": 9337,
-      "probability": 0.0009337
+      "count": 138525,
+      "probability": 0.138525
     },
     "8-0": {
-      "count": 613531,
-      "probability": 0.0613531
+      "count": 25267,
+      "probability": 0.025267
     },
     "3-5": {
-      "count": 143484,
-      "probability": 0.0143484
-    }
-  },
-  "James/Slevy": {
-    "4-4": {
-      "count": 3683507,
-      "probability": 0.3683507
-    },
-    "3-5": {
-      "count": 3591006,
-      "probability": 0.3591006
-    },
-    "5-3": {
-      "count": 1341890,
-      "probability": 0.134189
-    },
-    "2-6": {
-      "count": 1099397,
-      "probability": 0.1099397
-    },
-    "1-7": {
-      "count": 126857,
-      "probability": 0.0126857
-    },
-    "6-2": {
-      "count": 152449,
-      "probability": 0.0152449
-    },
-    "0-8": {
-      "count": 4894,
-      "probability": 0.0004894
-    }
-  },
-  "Charlie": {
-    "3-5": {
-      "count": 2836351,
-      "probability": 0.2836351
-    },
-    "2-6": {
-      "count": 1870250,
-      "probability": 0.187025
-    },
-    "4-4": {
-      "count": 2559211,
-      "probability": 0.2559211
-    },
-    "5-3": {
-      "count": 1410167,
-      "probability": 0.1410167
-    },
-    "6-2": {
-      "count": 463866,
-      "probability": 0.0463866
-    },
-    "1-7": {
-      "count": 669950,
-      "probability": 0.066995
-    },
-    "0-8": {
-      "count": 100223,
-      "probability": 0.0100223
-    },
-    "7-1": {
-      "count": 83590,
-      "probability": 0.008359
-    },
-    "8-0": {
-      "count": 6392,
-      "probability": 0.0006392
-    }
-  },
-  "Sam/Isaac": {
-    "2-6": {
-      "count": 1601800,
-      "probability": 0.16018
-    },
-    "1-7": {
-      "count": 388363,
-      "probability": 0.0388363
-    },
-    "3-5": {
-      "count": 3120770,
-      "probability": 0.312077
-    },
-    "4-4": {
-      "count": 3048133,
-      "probability": 0.3048133
-    },
-    "6-2": {
-      "count": 316348,
-      "probability": 0.0316348
-    },
-    "5-3": {
-      "count": 1464950,
-      "probability": 0.146495
-    },
-    "0-8": {
-      "count": 35006,
-      "probability": 0.0035006
-    },
-    "7-1": {
-      "count": 24630,
-      "probability": 0.002463
+      "count": 17994,
+      "probability": 0.017994
     }
   },
   "Boaz": {
     "5-3": {
-      "count": 3693649,
-      "probability": 0.3693649
-    },
-    "7-1": {
-      "count": 822107,
-      "probability": 0.0822107
-    },
-    "6-2": {
-      "count": 3389904,
-      "probability": 0.3389904
-    },
-    "3-5": {
-      "count": 346172,
-      "probability": 0.0346172
+      "count": 336989,
+      "probability": 0.336989
     },
     "4-4": {
-      "count": 1663022,
-      "probability": 0.1663022
+      "count": 345559,
+      "probability": 0.345559
     },
-    "8-0": {
-      "count": 51731,
-      "probability": 0.0051731
+    "3-5": {
+      "count": 143292,
+      "probability": 0.143292
     },
-    "1-7": {
-      "count": 1096,
-      "probability": 0.0001096
+    "6-2": {
+      "count": 132471,
+      "probability": 0.132471
+    },
+    "7-1": {
+      "count": 16330,
+      "probability": 0.01633
     },
     "2-6": {
-      "count": 32319,
-      "probability": 0.0032319
+      "count": 24110,
+      "probability": 0.02411
+    },
+    "1-7": {
+      "count": 1249,
+      "probability": 0.001249
     }
   },
-  "Katz": {
-    "4-4": {
-      "count": 3528038,
-      "probability": 0.3528038
-    },
-    "2-6": {
-      "count": 945230,
-      "probability": 0.094523
-    },
-    "3-5": {
-      "count": 2904515,
-      "probability": 0.2904515
+  "James/Slevy": {
+    "6-2": {
+      "count": 67949,
+      "probability": 0.067949
     },
     "5-3": {
-      "count": 1978370,
-      "probability": 0.197837
-    },
-    "6-2": {
-      "count": 516047,
-      "probability": 0.0516047
-    },
-    "7-1": {
-      "count": 56758,
-      "probability": 0.0056758
-    },
-    "1-7": {
-      "count": 68856,
-      "probability": 0.0068856
-    },
-    "8-0": {
-      "count": 2186,
-      "probability": 0.0002186
-    }
-  },
-  "Fisher": {
-    "6-2": {
-      "count": 2750741,
-      "probability": 0.2750741
-    },
-    "5-3": {
-      "count": 3172019,
-      "probability": 0.3172019
-    },
-    "3-5": {
-      "count": 671104,
-      "probability": 0.0671104
+      "count": 388149,
+      "probability": 0.388149
     },
     "4-4": {
-      "count": 1953078,
-      "probability": 0.1953078
+      "count": 402331,
+      "probability": 0.402331
     },
-    "7-1": {
-      "count": 1138581,
-      "probability": 0.1138581
-    },
-    "2-6": {
-      "count": 127382,
-      "probability": 0.0127382
-    },
-    "8-0": {
-      "count": 174161,
-      "probability": 0.0174161
+    "3-5": {
+      "count": 123605,
+      "probability": 0.123605
     },
     "1-7": {
-      "count": 12468,
-      "probability": 0.0012468
+      "count": 1068,
+      "probability": 0.001068
+    },
+    "2-6": {
+      "count": 16879,
+      "probability": 0.016879
     },
     "0-8": {
-      "count": 466,
-      "probability": 4.66e-05
-    }
-  },
-  "Oren/Levi": {
-    "5-3": {
-      "count": 2166359,
-      "probability": 0.2166359
-    },
-    "4-4": {
-      "count": 4274476,
-      "probability": 0.4274476
-    },
-    "3-5": {
-      "count": 2707685,
-      "probability": 0.2707685
-    },
-    "2-6": {
-      "count": 521963,
-      "probability": 0.0521963
-    },
-    "6-2": {
-      "count": 315655,
-      "probability": 0.0315655
-    },
-    "7-1": {
-      "count": 13862,
-      "probability": 0.0013862
+      "count": 19,
+      "probability": 1.9e-05
     }
   },
   "Schwartz": {
-    "6-2": {
-      "count": 3568153,
-      "probability": 0.3568153
+    "4-4": {
+      "count": 134225,
+      "probability": 0.134225
     },
     "5-3": {
-      "count": 2725065,
-      "probability": 0.2725065
+      "count": 312034,
+      "probability": 0.312034
     },
-    "7-1": {
-      "count": 2156992,
-      "probability": 0.2156992
-    },
-    "4-4": {
-      "count": 932337,
-      "probability": 0.0932337
+    "6-2": {
+      "count": 339493,
+      "probability": 0.339493
     },
     "3-5": {
-      "count": 118281,
-      "probability": 0.0118281
+      "count": 26387,
+      "probability": 0.026387
     },
     "8-0": {
-      "count": 494306,
-      "probability": 0.0494306
+      "count": 26272,
+      "probability": 0.026272
+    },
+    "7-1": {
+      "count": 159661,
+      "probability": 0.159661
     },
     "2-6": {
-      "count": 4866,
-      "probability": 0.0004866
+      "count": 1928,
+      "probability": 0.001928
+    }
+  },
+  "Charlie": {
+    "2-6": {
+      "count": 103923,
+      "probability": 0.103923
+    },
+    "6-2": {
+      "count": 103401,
+      "probability": 0.103401
+    },
+    "7-1": {
+      "count": 26063,
+      "probability": 0.026063
+    },
+    "5-3": {
+      "count": 224115,
+      "probability": 0.224115
+    },
+    "4-4": {
+      "count": 287312,
+      "probability": 0.287312
+    },
+    "3-5": {
+      "count": 223477,
+      "probability": 0.223477
+    },
+    "1-7": {
+      "count": 26271,
+      "probability": 0.026271
+    },
+    "8-0": {
+      "count": 2685,
+      "probability": 0.002685
+    },
+    "0-8": {
+      "count": 2753,
+      "probability": 0.002753
+    }
+  },
+  "Oren/Levi": {
+    "4-4": {
+      "count": 351955,
+      "probability": 0.351955
+    },
+    "2-6": {
+      "count": 91005,
+      "probability": 0.091005
+    },
+    "3-5": {
+      "count": 252415,
+      "probability": 0.252415
+    },
+    "5-3": {
+      "count": 226895,
+      "probability": 0.226895
+    },
+    "6-2": {
+      "count": 56728,
+      "probability": 0.056728
+    },
+    "1-7": {
+      "count": 16114,
+      "probability": 0.016114
+    },
+    "0-8": {
+      "count": 1136,
+      "probability": 0.001136
+    },
+    "7-1": {
+      "count": 3752,
+      "probability": 0.003752
     }
   },
   "Matan/North": {
-    "2-6": {
-      "count": 3366127,
-      "probability": 0.3366127
+    "4-4": {
+      "count": 176191,
+      "probability": 0.176191
     },
-    "3-5": {
-      "count": 2568711,
-      "probability": 0.2568711
+    "2-6": {
+      "count": 313038,
+      "probability": 0.313038
     },
     "1-7": {
-      "count": 2172629,
-      "probability": 0.2172629
+      "count": 109606,
+      "probability": 0.109606
     },
-    "4-4": {
-      "count": 1108716,
-      "probability": 0.1108716
+    "3-5": {
+      "count": 343201,
+      "probability": 0.343201
     },
     "0-8": {
-      "count": 456406,
-      "probability": 0.0456406
+      "count": 8148,
+      "probability": 0.008148
     },
     "5-3": {
-      "count": 282056,
-      "probability": 0.0282056
+      "count": 44346,
+      "probability": 0.044346
     },
     "6-2": {
-      "count": 42030,
-      "probability": 0.004203
+      "count": 5276,
+      "probability": 0.005276
     },
     "7-1": {
-      "count": 3221,
-      "probability": 0.0003221
+      "count": 194,
+      "probability": 0.000194
+    }
+  },
+  "Katz": {
+    "3-5": {
+      "count": 341116,
+      "probability": 0.341116
+    },
+    "2-6": {
+      "count": 181368,
+      "probability": 0.181368
+    },
+    "4-4": {
+      "count": 294517,
+      "probability": 0.294517
+    },
+    "6-2": {
+      "count": 24043,
+      "probability": 0.024043
+    },
+    "5-3": {
+      "count": 121313,
+      "probability": 0.121313
+    },
+    "1-7": {
+      "count": 35440,
+      "probability": 0.03544
+    },
+    "7-1": {
+      "count": 2132,
+      "probability": 0.002132
     },
     "8-0": {
-      "count": 104,
-      "probability": 1.04e-05
+      "count": 71,
+      "probability": 7.1e-05
     }
   },
   "Plotkin": {
+    "2-6": {
+      "count": 339316,
+      "probability": 0.339316
+    },
+    "5-3": {
+      "count": 18145,
+      "probability": 0.018145
+    },
     "1-7": {
-      "count": 3702487,
-      "probability": 0.3702487
+      "count": 123365,
+      "probability": 0.123365
     },
     "3-5": {
-      "count": 1146205,
-      "probability": 0.1146205
-    },
-    "2-6": {
-      "count": 4463505,
-      "probability": 0.4463505
-    },
-    "0-8": {
-      "count": 613845,
-      "probability": 0.0613845
+      "count": 366446,
+      "probability": 0.366446
     },
     "4-4": {
-      "count": 73958,
-      "probability": 0.0073958
+      "count": 137526,
+      "probability": 0.137526
+    },
+    "0-8": {
+      "count": 14434,
+      "probability": 0.014434
+    },
+    "6-2": {
+      "count": 768,
+      "probability": 0.000768
     }
   }
 }
