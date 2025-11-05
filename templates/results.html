@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Results - Fantasy Football</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header .stats {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .rankings {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .rankings h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .ranking-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 50px;
+        }
+        
+        .team-name {
+            flex: 1;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .avg-wins {
+            font-size: 1.2em;
+            color: #764ba2;
+            font-weight: bold;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .team-card h3 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .avg-wins-display {
+            font-size: 1.3em;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            color: #555;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+        
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .record-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .record-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .record-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .probability-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .extremes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .extreme-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .extreme-box.loss {
+            border-left-color: #dc3545;
+        }
+        
+        .extreme-box.win {
+            border-left-color: #28a745;
+        }
+        
+        .extreme-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .extreme-details {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .score-display {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .extremes {
+                grid-template-columns: 1fr;
+            }
+            
+            .ranking-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .rank {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 Simulation Results</h1>
+        <div class="stats">
+            {{ '{:,}'.format(num_simulations) }} simulations | {{ num_weeks }} weeks
+        </div>
+        <a href="/" class="back-button">← Run New Simulation</a>
+    </div>
+    
+    <div class="rankings">
+        <h2>📊 Team Rankings by Average Wins</h2>
+        {% for result in results %}
+        <div class="ranking-item">
+            <div class="rank">#{{ loop.index }}</div>
+            <div class="team-name">{{ result.team }}</div>
+            <div class="avg-wins">{{ "%.2f"|format(result.avg_wins) }} wins</div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% for result in results %}
+    <div class="team-card">
+        <h3>{{ result.team }}</h3>
+        <div class="avg-wins-display">Average Wins: {{ "%.2f"|format(result.avg_wins) }}</div>
+        
+        <div class="section-title">Record Distribution</div>
+        <table class="record-table">
+            <thead>
+                <tr>
+                    <th>Record</th>
+                    <th>Count</th>
+                    <th>Probability</th>
+                    <th style="width: 30%;">Distribution</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in result.record_dist[:10] %}
+                <tr>
+                    <td><strong>{{ record.record }}</strong></td>
+                    <td>{{ '{:,}'.format(record.count) }}</td>
+                    <td>{{ "%.2f"|format(record.probability) }}%</td>
+                    <td>
+                        <div class="probability-bar" style="width: {{ record.probability }}%"></div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="section-title">Extremes</div>
+        <div class="extremes">
+            <div class="extreme-box loss">
+                <div class="extreme-title">❌ Worst Loss</div>
+                {% if result.worst_loss %}
+                <div class="extreme-details">
+                    <div>Week {{ result.worst_loss.week }} vs {{ result.worst_loss.opponent }}</div>
+                    <div class="score-display">
+                        {{ "%.2f"|format(result.worst_loss.team_score) }} - {{ "%.2f"|format(result.worst_loss.opp_score) }}
+                    </div>
+                    <div>Margin: -{{ "%.2f"|format(result.worst_loss.margin) }} points</div>
+                </div>
+                {% else %}
+                <div class="extreme-details">No losses recorded</div>
+                {% endif %}
+            </div>
+            
+            <div class="extreme-box win">
+                <div class="extreme-title">✅ Closest Win</div>
+                {% if result.closest_win %}
+                <div class="extreme-details">
+                    <div>Week {{ result.closest_win.week }} vs {{ result.closest_win.opponent }}</div>
+                    <div class="score-display">
+                        {{ "%.2f"|format(result.closest_win.team_score) }} - {{ "%.2f"|format(result.closest_win.opp_score) }}
+                    </div>
+                    <div>Margin: +{{ "%.2f"|format(result.closest_win.margin) }} points</div>
+                </div>
+                {% else %}
+                <div class="extreme-details">No wins recorded</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div style="text-align: center; padding: 20px;">
+        <a href="/" class="back-button">← Run New Simulation</a>
+    </div>
+</body>
+</html>
