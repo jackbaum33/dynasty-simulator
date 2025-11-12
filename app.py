@@ -1,17 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response, jsonify, session
 import json
 import os
 from werkzeug.utils import secure_filename
 import csv
 from collections import Counter
 import random
+import threading
+import time
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production'
 
 # Create uploads directory if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# Global variable to store simulation progress
+simulation_state = {
+    'progress': 0,
+    'total': 0,
+    'status': 'idle',
+    'message': '',
+    'results': None
+}
 
 # Import simulation functions
 def read_scores(filename, num_weeks):
@@ -57,8 +69,10 @@ def simulate_season(teams_scores, schedule):
     
     return {team: tuple(record) for team, record in records.items()}
 
-def run_simulations(teams_scores, num_weeks, num_simulations=100000):
+def run_simulations_with_progress(teams_scores, num_weeks, num_simulations=100000):
     """Run Monte Carlo simulations and track all possible records for each team."""
+    global simulation_state
+    
     team_names = list(teams_scores.keys())
     team_record_counts = {team: Counter() for team in team_names}
     
@@ -66,6 +80,11 @@ def run_simulations(teams_scores, num_weeks, num_simulations=100000):
                     for team in team_names}
     closest_wins = {team: {'margin': float('inf'), 'opponent': None, 'week': None, 'team_score': None, 'opp_score': None} 
                     for team in team_names}
+    
+    simulation_state['total'] = num_simulations
+    simulation_state['status'] = 'running'
+    
+    update_interval = max(1, num_simulations // 100)  # Update progress 100 times
     
     for sim in range(num_simulations):
         schedule = generate_random_schedule(team_names, num_weeks)
@@ -102,6 +121,14 @@ def run_simulations(teams_scores, num_weeks, num_simulations=100000):
                             'margin': margin, 'opponent': team2, 'week': week_num + 1,
                             'team_score': score1, 'opp_score': score2
                         }
+        
+        # Update progress
+        if sim % update_interval == 0 or sim == num_simulations - 1:
+            simulation_state['progress'] = sim + 1
+            simulation_state['message'] = f'Completed {sim + 1:,} / {num_simulations:,} simulations'
+    
+    simulation_state['status'] = 'complete'
+    simulation_state['message'] = 'Simulation complete!'
     
     return team_record_counts, worst_losses, closest_wins
 
@@ -167,6 +194,29 @@ def process_results(team_record_counts, worst_losses, closest_wins, num_simulati
     
     return results
 
+def run_simulation_thread(filepath, num_weeks, num_simulations):
+    """Run simulation in a background thread."""
+    global simulation_state
+    
+    try:
+        # Read scores and run simulation
+        teams_scores = read_scores(filepath, num_weeks)
+        team_record_counts, worst_losses, closest_wins = run_simulations_with_progress(
+            teams_scores, num_weeks, num_simulations
+        )
+        
+        # Process results
+        results = process_results(team_record_counts, worst_losses, closest_wins, num_simulations)
+        
+        simulation_state['results'] = {
+            'results': results,
+            'num_simulations': num_simulations,
+            'num_weeks': num_weeks
+        }
+    except Exception as e:
+        simulation_state['status'] = 'error'
+        simulation_state['message'] = f'Error: {str(e)}'
+
 @app.route('/')
 def index():
     """Homepage with upload form."""
@@ -174,7 +224,9 @@ def index():
 
 @app.route('/simulate', methods=['POST'])
 def simulate():
-    """Handle file upload and run simulation."""
+    """Handle file upload and start simulation."""
+    global simulation_state
+    
     if 'csv_file' not in request.files:
         return redirect(url_for('index'))
     
@@ -192,19 +244,41 @@ def simulate():
         num_weeks = int(request.form.get('weeks', 7))
         num_simulations = int(request.form.get('simulations', 100000))
         
-        # Read scores and run simulation
-        teams_scores = read_scores(filepath, num_weeks)
-        team_record_counts, worst_losses, closest_wins = run_simulations(
-            teams_scores, num_weeks, num_simulations
+        # Reset simulation state
+        simulation_state = {
+            'progress': 0,
+            'total': num_simulations,
+            'status': 'starting',
+            'message': 'Initializing simulation...',
+            'results': None
+        }
+        
+        # Start simulation in background thread
+        thread = threading.Thread(
+            target=run_simulation_thread,
+            args=(filepath, num_weeks, num_simulations)
         )
+        thread.daemon = True
+        thread.start()
         
-        # Process results
-        results = process_results(team_record_counts, worst_losses, closest_wins, num_simulations)
-        
-        return render_template('results.html', 
-                             results=results, 
-                             num_simulations=num_simulations,
-                             num_weeks=num_weeks)
+        # Redirect to progress page
+        return render_template('progress.html')
+
+@app.route('/progress')
+def progress():
+    """Get current simulation progress."""
+    global simulation_state
+    return jsonify(simulation_state)
+
+@app.route('/results')
+def results():
+    """Display results page."""
+    global simulation_state
+    
+    if simulation_state['results']:
+        return render_template('results.html', **simulation_state['results'])
+    else:
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)

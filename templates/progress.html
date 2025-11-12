@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Simulation - Fantasy Football</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .status-message {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            color: #333;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .spinner {
+            margin: 30px auto;
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .complete-message {
+            display: none;
+            color: #28a745;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+        .complete-message.show {
+            display: block;
+        }
+        
+        .view-results-btn {
+            display: none;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .view-results-btn.show {
+            display: inline-block;
+        }
+        
+        .view-results-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .eta {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏈 Running Simulation</h1>
+        <p class="status-message" id="statusMessage">Initializing...</p>
+        
+        <div class="spinner" id="spinner"></div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%">
+                <span id="progressText">0%</span>
+            </div>
+        </div>
+        
+        <div class="eta" id="eta"></div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value" id="completed">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total</div>
+                <div class="stat-value" id="total">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="percentage">0%</div>
+            </div>
+        </div>
+        
+        <div class="complete-message" id="completeMessage">
+            ✅ Simulation Complete!
+        </div>
+        
+        <button class="view-results-btn" id="viewResultsBtn" onclick="window.location.href='/results'">
+            View Results
+        </button>
+    </div>
+    
+    <script>
+        let startTime = Date.now();
+        let lastProgress = 0;
+        let lastTime = Date.now();
+        
+        function updateProgress() {
+            fetch('/progress')
+                .then(response => response.json())
+                .then(data => {
+                    const progress = data.progress;
+                    const total = data.total;
+                    const status = data.status;
+                    const message = data.message;
+                    
+                    // Update total
+                    document.getElementById('total').textContent = total.toLocaleString();
+                    
+                    // Update completed
+                    document.getElementById('completed').textContent = progress.toLocaleString();
+                    
+                    // Calculate percentage
+                    const percentage = total > 0 ? Math.round((progress / total) * 100) : 0;
+                    document.getElementById('percentage').textContent = percentage + '%';
+                    
+                    // Update progress bar
+                    const progressBar = document.getElementById('progressBar');
+                    progressBar.style.width = percentage + '%';
+                    document.getElementById('progressText').textContent = percentage + '%';
+                    
+                    // Update status message
+                    document.getElementById('statusMessage').textContent = message;
+                    
+                    // Calculate ETA
+                    if (progress > lastProgress) {
+                        const currentTime = Date.now();
+                        const timeElapsed = currentTime - startTime;
+                        const progressMade = progress / total;
+                        
+                        if (progressMade > 0 && progressMade < 1) {
+                            const estimatedTotalTime = timeElapsed / progressMade;
+                            const remainingTime = estimatedTotalTime - timeElapsed;
+                            const remainingSeconds = Math.round(remainingTime / 1000);
+                            
+                            if (remainingSeconds > 60) {
+                                const minutes = Math.floor(remainingSeconds / 60);
+                                const seconds = remainingSeconds % 60;
+                                document.getElementById('eta').textContent = 
+                                    `Estimated time remaining: ${minutes}m ${seconds}s`;
+                            } else {
+                                document.getElementById('eta').textContent = 
+                                    `Estimated time remaining: ${remainingSeconds}s`;
+                            }
+                        }
+                        
+                        lastProgress = progress;
+                        lastTime = currentTime;
+                    }
+                    
+                    // Check if complete
+                    if (status === 'complete') {
+                        document.getElementById('spinner').style.display = 'none';
+                        document.getElementById('completeMessage').classList.add('show');
+                        document.getElementById('viewResultsBtn').classList.add('show');
+                        document.getElementById('eta').textContent = '';
+                        return; // Stop polling
+                    }
+                    
+                    // Check for error
+                    if (status === 'error') {
+                        document.getElementById('spinner').style.display = 'none';
+                        document.getElementById('statusMessage').textContent = 'Error: ' + message;
+                        document.getElementById('statusMessage').style.color = '#dc3545';
+                        return; // Stop polling
+                    }
+                    
+                    // Continue polling
+                    setTimeout(updateProgress, 500); // Update every 500ms
+                })
+                .catch(error => {
+                    console.error('Error fetching progress:', error);
+                    setTimeout(updateProgress, 1000); // Retry after 1 second
+                });
+        }
+        
+        // Start polling when page loads
+        updateProgress();
+    </script>
+</body>
+</html>

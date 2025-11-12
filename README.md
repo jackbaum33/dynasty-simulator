@@ -1,137 +1,180 @@
-usage:
-# Default (7 weeks, 100K simulations)
-python fantasy_football_simulator.py
+# Progress Bar Update - Changelog
 
-# Simulate 5 weeks with your data
-python fantasy_football_simulator.py --csv scores.csv --weeks 5
+## New Feature: Real-Time Progress Tracking! 🎯
 
-# Simulate 10 weeks with more simulations
-python fantasy_football_simulator.py --weeks 10 --simulations 500000
+The Flask app now includes a beautiful real-time progress bar that updates as simulations run.
 
-# Full custom run
-python fantasy_football_simulator.py --csv mydata.csv --weeks 12 --simulations 250000 --output season_results.json
+## What's New
 
-# See all options
-python fantasy_football_simulator.py --help
+### 1. Progress Page
+When you submit a simulation, you're now redirected to a progress page that shows:
+- ✅ **Real-time progress bar** with percentage
+- 📊 **Live statistics**: Completed simulations, total simulations, percentage
+- ⏱️ **ETA calculation**: Estimated time remaining
+- 🎨 **Animated spinner** during processing
+- ✅ **Completion message** when done
+- 🔘 **View Results button** appears automatically
 
-# Fantasy Football Schedule Simulator - Web Interface
+### 2. Technical Implementation
+- **Backend**: Uses threading to run simulations in background
+- **Real-time updates**: Progress endpoint polled every 500ms
+- **Smart ETA**: Calculates remaining time based on actual progress
+- **No page refresh needed**: Everything updates dynamically
 
-A Flask web application to simulate and visualize fantasy football schedule outcomes using Monte Carlo analysis.
+### 3. User Experience Flow
 
-## Features
+**Before:**
+1. Upload CSV → Click Submit → Wait... → See results
 
-- 🎯 Upload CSV with team scores
-- 🔢 Configurable number of weeks and simulations
-- 📊 Beautiful visual display of record distributions
-- 🏆 Team rankings by average wins
-- 📈 Probability bars for each possible record
-- ⚡ Worst loss and closest win tracking for each team
-- 📱 Responsive design
+**After:**
+1. Upload CSV → Click Submit
+2. **NEW: Progress page appears**
+3. Watch live progress bar fill up
+4. See exact number of completed simulations
+5. View estimated time remaining
+6. Automatic "View Results" button when complete
+7. Click to see results
 
-## Installation
+## Visual Preview
 
-1. Install Flask:
-```bash
-pip install flask
+```
+┌─────────────────────────────────────────────────┐
+│  🏈 Running Simulation                          │
+│  Completed 45,000 / 100,000 simulations         │
+│                                                 │
+│      [Spinning Animation]                       │
+│                                                 │
+│  ▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░                │
+│           45%                                   │
+│                                                 │
+│  Estimated time remaining: 1m 23s               │
+│                                                 │
+│  ┌─────────┬─────────┬─────────┐              │
+│  │Completed│  Total  │ Progress│              │
+│  │ 45,000  │ 100,000 │   45%   │              │
+│  └─────────┴─────────┴─────────┘              │
+└─────────────────────────────────────────────────┘
+
+When complete:
+┌─────────────────────────────────────────────────┐
+│  ✅ Simulation Complete!                        │
+│                                                 │
+│  [View Results] ← Click to see results          │
+└─────────────────────────────────────────────────┘
 ```
 
-## Running the Application
+## Files Changed
 
-1. Navigate to the directory containing `app.py`
-2. Run the Flask app:
+### Modified:
+- **app.py**: 
+  - Added threading support
+  - Added progress tracking endpoint `/progress`
+  - Split simulation into background thread
+  - Added global state management
+
+### New Files:
+- **templates/progress.html**: 
+  - Beautiful progress page with animations
+  - Real-time JavaScript updates
+  - ETA calculation
+  - Responsive design
+
+### Unchanged:
+- templates/index.html (upload page)
+- templates/results.html (results display)
+
+## Key Features
+
+### Progress Bar
+- Smooth animated transitions
+- Purple gradient matching app theme
+- Percentage displayed in center
+- Updates every 500ms
+
+### Statistics Display
+- **Completed**: Running count of simulations done
+- **Total**: Total simulations to run
+- **Progress**: Percentage complete
+
+### ETA Calculation
+- Smart estimation based on actual speed
+- Updates as simulation progresses
+- Displayed in minutes and seconds
+- Disappears when complete
+
+### Error Handling
+- Graceful error display if simulation fails
+- Continues working even if progress updates fail
+- Network resilience with retry logic
+
+## Performance Notes
+
+- Progress updates every 500ms (half second)
+- Minimal overhead on simulation performance
+- Background threading prevents UI blocking
+- Efficient state management
+
+## Browser Compatibility
+
+Works on all modern browsers:
+- ✅ Chrome/Edge
+- ✅ Firefox
+- ✅ Safari
+- ✅ Mobile browsers
+
+## Usage Example
+
 ```bash
+# Start the server
 python app.py
+
+# Upload a CSV with 100,000 simulations
+# Watch the progress bar fill up in real-time!
 ```
-
-3. Open your browser and go to:
-```
-http://localhost:5000
-```
-
-## Usage
-
-1. **Prepare Your CSV File**
-   - Format: `teamname,score1,score2,score3,...`
-   - Each row = one team
-   - Each column after team name = that week's score
-   
-   Example:
-   ```
-   Team Alpha,105.3,98.7,112.4,89.5,101.2,95.8,108.6
-   Team Beta,92.1,110.5,88.3,105.7,97.4,102.9,91.8
-   ```
-
-2. **Upload and Configure**
-   - Upload your CSV file
-   - Set number of weeks (must match CSV columns)
-   - Set number of simulations (higher = more accurate but slower)
-   - Default: 100,000 simulations
-
-3. **View Results**
-   - Team rankings by average wins
-   - Detailed record distribution for each team
-   - Probability visualization with bars
-   - Worst loss and closest win for each team
-
-## File Structure
-
-```
-├── app.py                  # Flask application
-├── templates/
-│   ├── index.html         # Upload page
-│   └── results.html       # Results display page
-└── uploads/               # Directory for uploaded CSV files (created automatically)
-```
-
-## Results Display
-
-For each team, you'll see:
-
-- **Average Wins**: Expected wins across all simulations
-- **Record Distribution**: All possible W-L records with:
-  - Count: How many simulations resulted in this record
-  - Probability: Percentage chance of this record
-  - Visual bar: Probability visualization
-- **Worst Loss**: Largest margin of defeat
-- **Closest Win**: Smallest margin of victory
-
-## Tips
-
-- **More simulations** (500K+) provide more stable results but take longer
-- **Fewer simulations** (10K-50K) are good for quick tests
-- The app tracks the top 10 most likely records for each team
-- All matchups are randomly generated each simulation
-- Results are deterministic for the same number of simulations (uses randomization)
 
 ## Technical Details
 
-- **Backend**: Flask (Python)
-- **Simulation**: Monte Carlo method
-- **Styling**: Pure CSS with gradient backgrounds
-- **Responsive**: Works on desktop and mobile
+### Backend (Python)
+```python
+# Simulation runs in separate thread
+thread = threading.Thread(target=run_simulation_thread, ...)
+thread.start()
 
-## Example Output
+# Progress endpoint returns JSON
+@app.route('/progress')
+def progress():
+    return jsonify(simulation_state)
+```
 
-After simulation, you'll see:
-1. Overall rankings sorted by average wins
-2. Individual team cards showing:
-   - Record distribution table
-   - Probability bars
-   - Extreme matchups (worst loss, closest win)
+### Frontend (JavaScript)
+```javascript
+// Poll progress every 500ms
+function updateProgress() {
+    fetch('/progress')
+        .then(response => response.json())
+        .then(data => {
+            // Update UI with progress
+            progressBar.style.width = percentage + '%';
+        });
+    setTimeout(updateProgress, 500);
+}
+```
 
-## Customization
+## Benefits
 
-You can modify:
-- `app.py`: Change simulation logic or add features
-- `templates/index.html`: Modify upload form
-- `templates/results.html`: Customize results display
-- CSS in templates: Change colors, fonts, layout
+1. **User Experience**: No more wondering if it's frozen
+2. **Transparency**: See exactly what's happening
+3. **Time Management**: Know how long to wait
+4. **Professional**: Modern, polished interface
+5. **Engagement**: Visual feedback keeps users interested
 
-## Notes
+## Future Enhancements (Ideas)
 
-- Uploads are stored in `uploads/` directory
-- Each simulation generates a new random schedule
-- Results show all possible outcomes based on actual scores
-- The app does NOT store results between sessions
+- ⭐ Pause/Resume simulation
+- ⭐ Cancel simulation early
+- ⭐ Save progress to database
+- ⭐ Multiple simultaneous simulations
+- ⭐ Progress notifications
+- ⭐ Historical timing data
 
-Enjoy analyzing your fantasy football league! 🏈
+Enjoy the new progress tracking feature! 🎉
